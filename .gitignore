@@ -5,3 +5,4 @@ debug_*.html
 *.log
 .env
 .DS_Store
+google-service-account.json
