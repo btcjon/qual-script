@@ -1,0 +1,21 @@
+{
+   "apps" : [{ 
+      "name":           "JBQualification"
+      ,"script":        "app.js"
+      ,"exec_mode":     "cluster"
+      ,"instances":     "max"      
+      ,"env_production": {
+         "NODE_ENV":  "production"
+      }
+   }],
+   "deploy" : {
+      "production" : {
+         "user":         "devo"
+         ,"host":        ["154.38.185.177"]
+         ,"ref":         "origin/master"
+         ,"repo":        "git@github.com:khalidrahmani/JBQualificationWebApp.git"
+         ,"path":        "/home/devo/apps/JBQualificationWebApp"
+         ,"post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env production"
+      }
+   }
+}

@@ -1,0 +1,27 @@
+{
+
+  "name":     "your-app-name",
+  "version":  "1.0.0",
+  "main":     "app.js",
+  "private":  true,
+  "type":     "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+     "express": "^4.17.1",
+     "google-spreadsheet":  "*",
+     "axios":               "*",
+     "lodash":              "*",
+     "dayjs":               "*",
+     "csv-parser":          "*",
+     "async-csv":           "*",
+     "puppeteer":           "*",
+     "dotenv":              "*",
+     "google-auth-library": "*"
+
+  },  
+  "devDependencies": {
+    "nodemon": "*"    
+  }
+}

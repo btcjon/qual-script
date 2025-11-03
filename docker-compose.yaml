@@ -1,0 +1,57 @@
+services:
+    k0g8w88k0cccgw400w04gcos-140832766202:
+        image: 'k0g8w88k0cccgw400w04gcos:6b91c16fcd59d1112a745655d0750afb9441e842'
+        container_name: k0g8w88k0cccgw400w04gcos-140832766202
+        restart: unless-stopped
+        expose:
+            - '8090'
+        networks:
+            coolify:
+                aliases:
+                    - k0g8w88k0cccgw400w04gcos-140832766202
+        mem_limit: '0'
+        memswap_limit: '0'
+        mem_swappiness: 60
+        mem_reservation: '0'
+        cpus: 0.0
+        cpu_shares: 1024
+        env_file:
+            - .env
+        labels:
+            - traefik.enable=true
+            - traefik.http.middlewares.gzip.compress=true
+            - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+            - traefik.http.routers.http-0-k0g8w88k0cccgw400w04gcos.entryPoints=http
+            - traefik.http.routers.http-0-k0g8w88k0cccgw400w04gcos.middlewares=redirect-to-https
+            - 'traefik.http.routers.http-0-k0g8w88k0cccgw400w04gcos.rule=Host(`qualscript.aifunnel.chat`) && PathPrefix(`/`)'
+            - traefik.http.routers.http-0-k0g8w88k0cccgw400w04gcos.service=http-0-k0g8w88k0cccgw400w04gcos
+            - traefik.http.routers.https-0-k0g8w88k0cccgw400w04gcos.entryPoints=https
+            - traefik.http.routers.https-0-k0g8w88k0cccgw400w04gcos.middlewares=gzip
+            - 'traefik.http.routers.https-0-k0g8w88k0cccgw400w04gcos.rule=Host(`qualscript.aifunnel.chat`) && PathPrefix(`/`)'
+            - traefik.http.routers.https-0-k0g8w88k0cccgw400w04gcos.service=https-0-k0g8w88k0cccgw400w04gcos
+            - traefik.http.routers.https-0-k0g8w88k0cccgw400w04gcos.tls.certresolver=letsencrypt
+            - traefik.http.routers.https-0-k0g8w88k0cccgw400w04gcos.tls=true
+            - traefik.http.services.http-0-k0g8w88k0cccgw400w04gcos.loadbalancer.server.port=8090
+            - traefik.http.services.https-0-k0g8w88k0cccgw400w04gcos.loadbalancer.server.port=8090
+            - 'caddy_0.encode=zstd gzip'
+            - 'caddy_0.handle_path.0_reverse_proxy={{upstreams 8090}}'
+            - 'caddy_0.handle_path=/*'
+            - caddy_0.header=-Server
+            - 'caddy_0.try_files={path} /index.html /index.php'
+            - 'caddy_0=https://qualscript.aifunnel.chat'
+            - caddy_ingress_network=coolify
+            - coolify.managed=true
+            - coolify.version=4.0.0-beta.434
+            - coolify.applicationId=2
+            - coolify.type=application
+            - coolify.name=k0g8w88k0cccgw400w04gcos
+            - coolify.resourceName=qualscript
+            - coolify.projectName=main
+            - coolify.serviceName=qualscript
+            - coolify.environmentName=production
+            - coolify.pullRequestId=0
+networks:
+    coolify:
+        external: true
+        name: coolify
+        attachable: true

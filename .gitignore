@@ -1,0 +1,7 @@
+node_modules/
+qualification_download_files/
+debug_*.png
+debug_*.html
+*.log
+.env
+.DS_Store
