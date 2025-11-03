@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  qualscript:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qualscript
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      # Mount source code for easy live updates
+      - ./app.js:/app/app.js
+      - ./qualification_script.js:/app/qualification_script.js
+      - ./google-service-account.json:/app/google-service-account.json
+      # Persistent download directory
+      - ./qualification_download_files:/app/qualification_download_files
+    environment:
+      - NODE_ENV=production
+      - PORT=8090
+      - HOST=0.0.0.0
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8090/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
